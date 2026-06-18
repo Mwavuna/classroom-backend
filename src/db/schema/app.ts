@@ -11,7 +11,7 @@ const timestamps = {
 export const departments = pgTable("departments", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
   code: varchar("code", { length: 50 }).notNull().unique(),
-  name: varchar("department", { length: 255 }).notNull(),
+  name: varchar("name", { length: 255 }).notNull(),
   description: varchar("description", { length: 255 }),
   ...timestamps,
 });
