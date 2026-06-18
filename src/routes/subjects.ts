@@ -8,8 +8,12 @@ const router = express.Router();
 router.get("/", async (req: express.Request, res: express.Response) => {
   try {
     const { search, department, page = 1, limit = 10 } = req.query;
-    const currentPage = Math.max(1, +page);
-    const limitPerPage = Math.max(1, +limit);
+    const parsedPage = Number.parseInt(String(page), 10);
+    const parsedLimit = Number.parseInt(String(limit), 10);
+    const currentPage =
+      Number.isFinite(parsedPage) && parsedPage > 0 ? parsedPage : 1;
+    const limitPerPage =
+      Number.isFinite(parsedLimit) && parsedLimit > 0 ? parsedLimit : 10;
     const offset = (currentPage - 1) * limitPerPage;
 
     const filterConditions = [];
@@ -26,7 +30,7 @@ router.get("/", async (req: express.Request, res: express.Response) => {
 
     //if department filter exists,
     if (department) {
-      filterConditions.push(ilike(departments.name, `%${departments}%`));
+      filterConditions.push(ilike(departments.name, `%${department}%`));
     }
     //combine all filters using AND if they exist
 
@@ -59,7 +63,7 @@ router.get("/", async (req: express.Request, res: express.Response) => {
         page: currentPage,
         limit: limitPerPage,
         total: totalCount,
-        totalPages: Math.ceil(totalCount / totalCount),
+        totalPages: Math.ceil(totalCount / limitPerPage),
       },
     });
   } catch (err) {
