@@ -1,7 +1,7 @@
 CREATE TABLE "departments" (
 	"id" integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY (sequence name "departments_id_seq" INCREMENT BY 1 MINVALUE 1 MAXVALUE 2147483647 START WITH 1 CACHE 1),
 	"code" varchar(50) NOT NULL,
-	"department" varchar(255) NOT NULL,
+	"name" varchar(255) NOT NULL,
 	"description" varchar(255),
 	"createdAt" timestamp DEFAULT now() NOT NULL,
 	"updatedAt" timestamp DEFAULT now() NOT NULL,
