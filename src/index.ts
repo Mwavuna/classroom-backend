@@ -4,6 +4,10 @@ import subjectsRouter from "./routes/subjects";
 const app = express();
 const PORT = 8000;
 const FRONTEND_URL = process.env.FRONTEND_URL;
+
+if (!FRONTEND_URL) {
+  throw new Error("FRONTEND_URL is required");
+}
 // JSON middleware to parse incoming requests with JSON payloads
 app.use(express.json());
 app.use(
